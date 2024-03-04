@@ -8,6 +8,9 @@ var generated_area
 @onready var possible_tiles = []
 @onready var collapsable_tiles
 
+
+
+
 func _ready():
 	setup_refs_list()
 	setup_refs()
@@ -109,9 +112,15 @@ func get_tiles_possible_states(gridsize,ref):
 				if get_tile_in_dir == -1 and not possible_tiles[x][y][r] == null:
 					for p in types_of_tiles:
 						possible_tiles[x][y][r].append(p)
-					
-					
-					#references[ref][get_tile_in_dir][r+2]
+				
+				else:
+					for o in possible_tiles[x][y][r].size():
+						#if not
+						pass
+				
+				
+				
+				#references[ref][get_tile_in_dir][r+2]
 				
 				
 				
