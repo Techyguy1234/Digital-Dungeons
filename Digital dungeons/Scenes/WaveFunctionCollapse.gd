@@ -5,8 +5,8 @@ const types_of_refs = 1
 const directions_per_tile = 4
 @onready var references = []
 var generated_area
-@onready var possible_tiles = []
 @onready var collapsable_tiles
+var superpositions
 
 
 
@@ -20,42 +20,15 @@ func _process(_delta):
 
 func generate_area_from_reference(ref,size_of_area):
 	generated_area = []
-	possible_tiles = []
-	collapsable_tiles = []
 	for a in size_of_area:
 		generated_area.append([])
-		possible_tiles.append([])
-		collapsable_tiles.append([])
 		for b in size_of_area:
-			generated_area[a].append([0])
-			possible_tiles[a].append([])
-			collapsable_tiles[a].append([])
-			for r in 4:
-				possible_tiles[a][b].append([])
-				collapsable_tiles[a][b].append([])
+			generated_area[a].append([])
 	
+	setup_superpositions(size_of_area,types_of_tiles)
 	
-	get_tiles_possible_states(size_of_area,ref)
-	
-	#I have no idea what this does
-	#var get_tile_in_dir
-	#for b in size_of_area:
-	#	for a in size_of_area:
-	#		for r in 4:
-	#			if r == 0 and not b == 0:
-	#				get_tile_in_dir = generated_area[a][b-1][0]
-	#			elif r == 1 and not a == size_of_area-1:
-	#				get_tile_in_dir = generated_area[a+1][b][0]
-	#			elif r == 2 and not b == size_of_area-1:
-	#				get_tile_in_dir = generated_area[a][b+1][0]
-	#			elif r == 3 and not a == 0:
-	#				get_tile_in_dir = generated_area[a-1][b][0]
-	#			else:
-	#				get_tile_in_dir = 0
-	#			
-	#			if not possible_tiles[a][b].has(get_tile_in_dir) and not str(get_tile_in_dir) == "0":
-	#				possible_tiles[a][b].append(get_tile_in_dir)
-	#print(possible_tiles)
+	get_collapseable_tiles_in_grid(size_of_area,ref)
+
 
 
 
@@ -91,40 +64,57 @@ func setup_refs():
 	#print(references)
 
 
-func get_collapseable_tiles_in_grid(_gridsize,_ref):
-	pass
-func get_tiles_possible_states(gridsize,ref):
-	var get_tile_in_dir
+func get_collapseable_tiles_in_grid(gridsize,ref):
 	for y in gridsize:
 		for x in gridsize:
-			for r in 4:
-				if r == 0 and not y == 0:
-					get_tile_in_dir = generated_area[x][y-1][0]
-				elif r == 1 and not x == gridsize-1:
-					get_tile_in_dir = generated_area[x+1][y][0]
-				elif r == 2 and not y == gridsize-1:
-					get_tile_in_dir = generated_area[x][y+1][0]
-				elif r == 3 and not x == 0:
-					get_tile_in_dir = generated_area[x-1][y][0]
-				else:
-					get_tile_in_dir = -1
-				
-				if get_tile_in_dir == -1 and not possible_tiles[x][y][r] == null:
-					for p in types_of_tiles:
-						possible_tiles[x][y][r].append(p)
-				
-				else:
-					for o in possible_tiles[x][y][r].size():
-						#if not
-						pass
-				
-				
-				
-				#references[ref][get_tile_in_dir][r+2]
-				
-				
-				
-				
-	print(possible_tiles)
+			get_tile_states(x,y,ref,gridsize)
+
+
+func setup_superpositions(gridsize,tiletypes):
+	superpositions = []
+	for a in gridsize:
+		superpositions.append([])
+		for b in gridsize:
+			superpositions[a].append([])
+			for c in tiletypes:
+				superpositions[a][b].append(c)
+	collapsable_tiles = []
+	for a in tiletypes:
+		collapsable_tiles.append([])
+		
+#references[current reference][tile type][direction]
+
+
+func get_tile_states(xinput,yinput,ref,gridsize):
+	var possible_states = []
+	if not xinput == -1 or not xinput == gridsize or not yinput == -1 or not yinput == gridsize:
+		pass
+		#for a in references[ref][generated_area[xinput][yinput+1]][2]:
+			#pass
+		
+		
+		#step 1: get tile above possible positions
+		#step 2: for every possible position, get possible tiles below
+		#step 3: set that to possible states
+		#step 4: get tile to right possible positions
+		#step 5: for every possible position, get possible tiles to left
+		#step 7: whichever positions in possible states that it doesnt have are removed
+		#step 8: repeat 4-7 for down and left
+		
+		
+		#references[ref][generated_area[xinput][yinput]][0]
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	return possible_states
+
+
+
+
+
