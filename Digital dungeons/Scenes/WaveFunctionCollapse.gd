@@ -23,11 +23,12 @@ func generate_area_from_reference(ref,size_of_area):
 	for a in size_of_area:
 		generated_area.append([])
 		for b in size_of_area:
-			generated_area[a].append([])
+			generated_area[a].append(-1)
 	
 	setup_superpositions(size_of_area,types_of_tiles)
 	
 	get_collapseable_tiles_in_grid(size_of_area,ref)
+	
 
 
 
@@ -67,7 +68,7 @@ func setup_refs():
 func get_collapseable_tiles_in_grid(gridsize,ref):
 	for y in gridsize:
 		for x in gridsize:
-			get_tile_states(x,y,ref,gridsize)
+			get_tile_states(1,1,ref,gridsize)
 
 
 func setup_superpositions(gridsize,tiletypes):
@@ -88,11 +89,75 @@ func setup_superpositions(gridsize,tiletypes):
 func get_tile_states(xinput,yinput,ref,gridsize):
 	var possible_states = []
 	if not xinput == -1 or not xinput == gridsize or not yinput == -1 or not yinput == gridsize:
-		pass
+		
+		
+		
+		
+		#start with top
+		if not yinput == 0:
+			possible_states.append_array(references[ref][generated_area[xinput][yinput-1]][2])
+			print(possible_states)
+			if not xinput == gridsize-1:
+				for a in possible_states.size():
+					if not references[ref][generated_area[xinput+1][yinput]][3].has(possible_states[a]):
+						possible_states.remove_at(possible_states.find(possible_states[a]))
+			print(possible_states)
+			if not yinput == gridsize-1:
+				for a in possible_states.size():
+					if not references[ref][generated_area[xinput][yinput+1]][0].has(possible_states[a]):
+						possible_states.remove_at(possible_states.find(possible_states[a]))
+			print(possible_states)
+			if not xinput == 0:
+				for a in possible_states.size():
+					if not references[ref][generated_area[xinput-1][yinput]][3].has(possible_states[a]):
+						possible_states.remove_at(possible_states.find(possible_states[a]))
+			print(possible_states)
+		
+		
+		#start with right
+		elif not xinput == gridsize:
+			pass
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		#start with bottom
+		elif not yinput == gridsize:
+			pass
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		#start with left
+		elif not xinput == 1:
+			pass
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		#for a in references[ref][generated_area[xinput][yinput+1]][2]:
 			#pass
 		
-		
+		#steps if not y == 1
 		#step 1: get tile above possible positions
 		#step 2: for every possible position, get possible tiles below
 		#step 3: set that to possible states
