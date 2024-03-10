@@ -66,9 +66,9 @@ func setup_refs():
 
 
 func get_collapseable_tiles_in_grid(gridsize,ref):
-	for y in gridsize:
-		for x in gridsize:
-			get_tile_states(1,1,ref,gridsize)
+	#for y in gridsize:
+	#for x in gridsize:
+	get_tile_states(1,1,ref,gridsize)
 
 
 func setup_superpositions(gridsize,tiletypes):
